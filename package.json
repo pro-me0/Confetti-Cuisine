@@ -1,10 +1,14 @@
 {
   "name": "confetti_cuisine",
+  "engines": {
+    "node": "16.9.1"
+  },
   "version": "1.0.0",
   "description": "A site for booking classes for cooking.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
   },
   "author": "Jon Wexler",
   "license": "ISC",
