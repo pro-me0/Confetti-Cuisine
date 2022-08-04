@@ -18,7 +18,7 @@ const express = require("express"),
   connectFlash = require("connect-flash"),
   User = require("./models/user");
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/lesson18", { useNewUrlParser: true }
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/lesson18" || 'mongodb+srv://mazi:mazi.atlas@procluster.5oeffmz.mongodb.net/?retryWrites=true&w=majority', { useNewUrlParser: true }
 );
 mongoose.set("useCreateIndex", true);
 
