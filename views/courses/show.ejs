@@ -16,15 +16,17 @@
     </td>
   </tr>
   <tr>
-    <th>Max Students</th>
+    <th>Ingredients</th>
     <td>
-      <%= course.maxStudents%>
+      <% course.ingredients.forEach((item) => { %>
+        <span> <%= item %></span>,
+      <% }) %>
     </td>
   </tr>
   <tr>
     <th>Cost</th>
-    <td>$
-      <%= course.cost%>
+    <td>#
+      <%=course.cost%>
     </td>
   </tr>
 </table>

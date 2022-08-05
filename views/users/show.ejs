@@ -27,7 +27,7 @@
   </tr>
 </table>
 
-<% if(user.subscribedAccount !== undefined) { %>
+<% if(user.subscribedAccount !== null) { %>
 <h4 class="center"> This user has a
   <a href="<%=`/subscribers/${user.subscribedAccount}`%>">
     subscribed account </a>.

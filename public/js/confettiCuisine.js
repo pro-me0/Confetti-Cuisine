@@ -62,7 +62,7 @@ $(document).ready(() => {
 						<span class="course-title">
 							${course.title}
 						</span>
-						<span class="course-cost">$${course.cost}</span>
+						<span class="course-cost">#${course.cost}</span>
 						<button class="${course.joined ? "joined-button" : "join-button"} btn btn-info btn-sm" data-id="${
             course._id
           }">

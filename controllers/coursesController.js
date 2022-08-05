@@ -7,7 +7,7 @@ const Course = require("../models/course"),
     return {
       title: body.title,
       description: body.description,
-      maxStudents: body.maxStudents,
+      ingredients: body.ingredients,
       cost: body.cost
     };
   };
@@ -85,7 +85,9 @@ module.exports = {
 
   update: (req, res, next) => {
     let courseId = req.params.id,
-      courseParams = getCourseParams(req.body);
+      courseParams = getCourseParams(req.body),
+      cp = courseParams.ingredients.split(',');
+      courseParams.ingredients = cp;
 
     Course.findByIdAndUpdate(courseId, {
       $set: courseParams

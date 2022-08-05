@@ -14,11 +14,7 @@ var courseSchema = new Schema(
       type: String,
       required: true
     },
-    maxStudents: {
-      type: Number,
-      default: 0,
-      min: [0, "Course cannot have a negative number of students"]
-    },
+    ingredients: [],
     cost: {
       type: Number,
       default: 0,

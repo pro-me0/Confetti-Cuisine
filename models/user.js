@@ -1,44 +1,48 @@
 "use strict";
 
 const mongoose = require("mongoose"),
-  { Schema } = require("mongoose"),
+randomtoken = require('rand-token'),
+  { Schema } = mongoose,
+  Subscriber = require("./subscriber"),
+  bcrypt = require("bcrypt"),
   passportLocalMongoose = require("passport-local-mongoose"),
-  Subscriber = require("./subscriber");
-
-var userSchema = new Schema(
-  {
-    name: {
-      first: {
-        type: String,
-        trim: true
+  userSchema = new Schema(
+    {
+      name: {
+        first: {
+          type: String,
+          trim: true
+        },
+        last: {
+          type: String,
+          trim: true
+        }
       },
-      last: {
+      email: {
         type: String,
-        trim: true
+        required: true,
+        lowercase: true,
+        unique: true
+      },
+      zipCode: {
+        type: Number,
+        min: [1000, "Zip code too short"],
+        max: 99999
+      },
+      courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
+      subscribedAccount: {
+        type: Schema.Types.ObjectId,
+        ref: "Subscriber"
+      },
+      apiToken: {
+        type: String,
+        unique: true
       }
     },
-    email: {
-      type: String,
-      required: true,
-      lowercase: true,
-      unique: true
-    },
-    zipCode: {
-      type: Number,
-      min: [1000, "Zip code too short"],
-      max: 99999
-    },
-    password: {
-      type: String,
-      required: true
-    },
-    subscribedAccount: { type: Schema.Types.ObjectId, ref: "Subscriber" },
-    courses: [{ type: Schema.Types.ObjectId, ref: "Course" }]
-  },
-  {
-    timestamps: true
-  }
-);
+    {
+      timestamps: true
+    }
+  );
 
 userSchema.virtual("fullName").get(function() {
   return `${this.name.first} ${this.name.last}`;
@@ -55,13 +59,19 @@ userSchema.pre("save", function(next) {
         next();
       })
       .catch(error => {
-        console.log(`Error in connecting subscriber: ${error.message}`);
+        console.log(`Error in connecting subscriber:${error.message}`);
         next(error);
       });
   } else {
     next();
   }
 });
+
+userSchema.pre('save', function(next){
+  let user = this;
+  if (!user.apiToken) user.apiToken = randomtoken.generate(16);
+  next()
+})
 
 userSchema.plugin(passportLocalMongoose, {
   usernameField: "email"
