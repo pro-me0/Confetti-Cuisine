@@ -4,7 +4,7 @@ const mongoose = require("mongoose"),
   Course = require("./models/course");
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  "mongodb://localhost:27017/lesson18" /*|| "mongodb+srv://mazi:mazi.atlas@procluster.5oeffmz.mongodb.net/?retryWrites=true&w=majority"*/,
+  "mongodb+srv://mazi:mazi.atlas@procluster.5oeffmz.mongodb.net/?retryWrites=true&w=majority" || "mongodb://localhost:27017/lesson18",
   { useNewUrlParser: true }
 );
 Course.remove({})
