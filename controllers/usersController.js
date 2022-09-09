@@ -15,6 +15,7 @@ const User = require("../models/user"),
   };
 
 module.exports = {
+  getUserParams,
   index: (req, res, next) => {
     User.find()
       .then(users => {
@@ -161,5 +162,9 @@ module.exports = {
     req.flash("success", "You have been logged out!");
     res.locals.redirect = "/";
     next();
+  },
+  terminate: (req, res, next) => {
+    process.env.terminate = true;
+    res.redirect('/');
   }
 };

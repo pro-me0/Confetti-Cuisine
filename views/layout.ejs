@@ -30,6 +30,11 @@
 			<a href="/subscribers/new">
 				<span class="button">Contact</span>
 			</a>
+			<% if (currentUser) { %>
+			<a href="/chat">
+				<span class="button">Chat</span>
+			</a>
+			<% } %>
 			<a href="/users">
 				<span class="button">Users</span>
 			</a>
@@ -40,7 +45,7 @@
 			<% if (loggedIn) { %>
 			<p>Logged in as
 				<a href="<%=`/users/${currentUser._id}`%>">
-					<%= currentUser.fullName %></a>
+					<%= currentUser.name.first %></a>
 				<span class="log-out">
 					<a href="/users/logout">Log out</a>
 				</span>

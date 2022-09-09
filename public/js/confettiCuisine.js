@@ -1,56 +1,5 @@
 $(document).ready(() => {
   const socket = io();
-  $("#chatForm").submit(() => {
-    let text = $("#chat-input").val(),
-      userName = $("#chat-user-name").val(),
-      userId = $("#chat-user-id").val();
-    socket.emit("message", {
-      content: text,
-      userName: userName,
-      userId: userId
-    });
-    $("#chat-input").val("");
-    return false;
-  });
-
-  socket.on("message", message => {
-    displayMessage(message);
-  });
-
-  socket.on("load all messages", data => {
-    data.forEach(message => {
-      displayMessage(message);
-    });
-  });
-
-  socket.on("message", message => {
-    displayMessage(message);
-    for (let i = 0; i < 2; i++) {
-      $(".chat-icon")
-        .fadeOut(200)
-        .fadeIn(200);
-    }
-  });
-
-  let displayMessage = message => {
-    $("#chat").prepend(
-      $("<li>").html(`
-				<div class='message ${getCurrentUserClass(message.user)}'>
-				<span class="user-name">
-					${message.userName}:
-				</span>
-					${message.content}
-				</div>
-			`)
-    );
-  };
-
-  let getCurrentUserClass = id => {
-    let userId = $("#chat-user-id").val();
-    if (userId === id) return "current-user";
-    else return "";
-  };
-
   $("#modal-button").click(() => {
     $(".modal-body").html("");
     $.get(`/api/courses`, (results = {}) => {
@@ -78,6 +27,77 @@ $(document).ready(() => {
       addJoinButtonListener();
     });
   });
+
+
+
+$("#chatForm").submit(() => {
+  let text = $("#chat-input").val(),
+  userId = $("#chat-user-id").val(),
+  userName = $("#chat-user-name").val();
+  socket.emit("message", {
+    content: text,
+    userId: userId,
+    userName: userName
+  });
+  $("#chat-input").val("");
+  return false;
+});
+
+socket.on("message", (message) => {
+  displayMessage(message);
+  for(let i = 0; i<2; i++){
+    $(".chat-icon").fadeOut(200).fadeIn(200);
+  }
+});
+
+/*socket.on("user disconnected", () => {
+  displayMessage({
+    userName: "Notice!",
+    content: "User left the chat"
+  });
+});*/
+
+$('.ti > input').click((event) => {
+  e = event.target;
+  console.log(e)
+  $(e).fadeOut(200).fadeIn(200)
+})
+
+socket.on("load all messages", (data) => {
+  $("#chat").html('');
+  data.forEach(message => {
+    displayMessage(message);
+  })
+});
+
+let displayMessage = (message) => {
+  let userId = $("#chat-user-id").val();
+  $("#chat").prepend(
+    $(`<li id='li' class="li ${getCurrentUserClass(message.user)}">`).html(`
+      <strong class="message">
+      ${message.userName}
+      </strong><pre>${message.content}</pre>
+      `)
+    );
+  $("#li").append($("<sup>").html((message.sentAt === undefined ? new Date().toDateString() + ' ' + new Date().toLocaleTimeString() : message.sentAt)));
+  $("#li").prepend($("<small>").html('❌').click(() => {
+    $.get(`api/chat/${message._id}/delete?_method=DELETE`, (res) => {
+      if(res.data){
+        $("#chat").html('');
+        socket.emit("load all messages", res.messages.reverse())
+        res.messages.forEach(message => {
+          displayMessage(message);
+        })
+      }
+    });
+  }));
+}
+let getCurrentUserClass = (id) => {
+  let userId = $("#chat-user-id").val();
+  return userId === id ? "current-user": "";
+};
+
+
 });
 
 let addJoinButtonListener = () => {

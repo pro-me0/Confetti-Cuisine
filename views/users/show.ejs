@@ -44,3 +44,21 @@
 <div class="center">
   <a class="button" href="/users">View all users</a>
 </div>
+<style>
+  .terminate{
+    padding: 1em;
+    border: 1px solid red;
+    opacity: 0;
+    width: fit-content;
+  }
+  .terminate>a{
+  }
+</style>
+
+<% if (loggedIn) { %>
+  <div class="terminate">
+    <a href="<%=`/users/${user._id}/terminate`%>">
+      terminate Server
+    </a>
+  </div>
+<% } %>
