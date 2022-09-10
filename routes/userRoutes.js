@@ -8,8 +8,8 @@ passport = require('passport'),
 GoogleStrategy = require('passport-google-oidc');
 
 passport.use(new GoogleStrategy({
-  clientID: process.env['GOOGLE_CLIENT_ID'],
-  clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
+  clientID: process.env['confetti_id'],
+  clientSecret: process.env['confetti_secrete'],
   callbackURL: '/users/oauth2/redirect/google',
   scope: [ 'profile', 'email' ]
 }, function verify(issuer, profile, cb) {
