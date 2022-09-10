@@ -46,8 +46,8 @@ module.exports = {
 delete: (req, res, next) => {
   let mid = req.params.m;
   Message.findByIdAndRemove(mid)
-  .then(() =>{
-    console.log('Chat deleted');
+  .then((del) =>{
+    console.log(`${del.userName}`.cyan, `deleted`.brightRed, `"${del.content}"`.white);
     next();
   }).
   catch(e => {

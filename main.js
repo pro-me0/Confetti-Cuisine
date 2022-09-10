@@ -25,7 +25,7 @@ if(process.env.NODE_ENV == 'test'){
     useNewUrlParser: true
   })
 }else{
-  mongoose.connect("mongodb+srv://mazi:mazi.atlas@procluster.5oeffmz.mongodb.net/confetti" || "mongodb://localhost:27017/lesson18", { useNewUrlParser: true }
+  mongoose.connect(/*"mongodb+srv://mazi:mazi.atlas@procluster.5oeffmz.mongodb.net/confetti" ||*/ "mongodb://localhost:27017/lesson18", { useNewUrlParser: true }
   );
 }
 mongoose.set("useCreateIndex", true);
