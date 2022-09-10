@@ -1,5 +1,6 @@
 "use strict";
 require('dotenv').config();
+require('colors');
 
 const express = require("express"),
   layouts = require("express-ejs-layouts"),
