@@ -2,7 +2,7 @@
  <h1>Chat</h1>
     <form id="chatForm">
         <div id="chat"></div>
-        <input id="chat-user-id" type="hidden" value="<%= currentUser._id %>">
+        <input id="chat-user-email" type="hidden" value="<%= currentUser.email %>">
 
         <input id="chat-user-name" type="hidden" value="<%= `${currentUser.name.first} ${currentUser.name.last}` %>">
             <div class="ti">

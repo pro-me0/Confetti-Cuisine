@@ -26,12 +26,13 @@ module.exports = {
         let messageAttributes = {
         content: data.content,
         userName: data.userName,
-        user: data.userId,
+        user: data.userEmail,
         /*date: new Date().toDateString() + ' ' + new Date().toLocaleTimeString(),
         user: cu*/
       }
-      User.findById(messageAttributes.user).then((user) => {
+      User.find({email:messageAttributes.user}).then((user) => {
         Message.create(messageAttributes).then((message) => {
+          console.log('m>',message)
           io.emit("message", message);
         })
         .catch((e) => {

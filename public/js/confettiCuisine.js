@@ -32,11 +32,11 @@ $(document).ready(() => {
 
 $("#chatForm").submit(() => {
   let text = $("#chat-input").val(),
-  userId = $("#chat-user-id").val(),
+  userEmail = $("#chat-user-email").val(),
   userName = $("#chat-user-name").val();
   socket.emit("message", {
     content: text,
-    userId: userId,
+    userEmail: userEmail,
     userName: userName
   });
   $("#chat-input").val("");
@@ -93,7 +93,7 @@ let displayMessage = (message) => {
   }));
 }
 let getCurrentUserClass = (id) => {
-  let userId = $("#chat-user-id").val();
+  let userId = $("#chat-user-email").val();
   return userId === id ? "current-user": "";
 };
 
