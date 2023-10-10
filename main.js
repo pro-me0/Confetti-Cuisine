@@ -1,3 +1,5 @@
+console.clear();
+
 "use strict";
 require('dotenv').config();
 require('colors');
@@ -21,14 +23,14 @@ const express = require("express"),
   connectFlash = require("connect-flash"),
   User = require("./models/user");
 
-if(process.env.NODE_ENV == 'test'){
-  mongoose.connect('mongodb://localhost:27017/r-test',{
-    useNewUrlParser: true
-  })
-}else{
-  mongoose.connect("mongodb+srv://mazi:mazi.atlas@procluster.5oeffmz.mongodb.net/confetti" || "mongodb://localhost:27017/lesson18", { useNewUrlParser: true }
-  );
-}
+// if (process.env.NODE_ENV == 'test') {
+//   mongoose.connect('mongodb://localhost:27017/r-test', {
+//     useNewUrlParser: true
+//   })
+// } else {
+mongoose.connect("mongodb+srv://mazi2:mazi2pass@procluster.5oeffmz.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true }
+);
+// }
 mongoose.set("useCreateIndex", true);
 
 
@@ -86,10 +88,10 @@ app.use("/", router);
 const server = app.listen(app.get("port"), () => {
   console.clear();
   console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-  if(process.env.NODE_ENV === 'test') console.log('>> this is a test environment<<')
+  if (process.env.NODE_ENV === 'test') console.log('>> this is a test environment<<')
   console.log(`Server running at http://localhost:${app.get("port")}`);
 }),
-io = require("socket.io")(server),
-chatController = require("./controllers/chatController").io(io);
+  io = require("socket.io")(server),
+  chatController = require("./controllers/chatController").io(io);
 
 module.exports = app;
